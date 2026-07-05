@@ -164,8 +164,14 @@ function Hero() {
   );
 }
 
+const VALUE_PROPS = [
+  { text: 'No car ride, no waiting room — your pet is groomed right at your curb.', source: 'What to expect' },
+  { text: 'Cats and small dogs, 25 lbs and under, get one-on-one attention every visit.', source: 'What to expect' },
+  { text: 'A fully self-contained van means water, power, and grooming gear all come to you.', source: 'What to expect' },
+];
+
 function Features() {
-  const [shuffleOrder, setShuffleOrder] = useState([0, 1, 2]);
+  const [shuffleOrder, setShuffleOrder] = useState(VALUE_PROPS.map((_, i) => i));
 
   return (
     <section id="features" className="bg-surface text-white py-24 md:py-32">
@@ -179,21 +185,19 @@ function Features() {
             className="rounded-3xl bg-white/5 border border-white/10 p-8 h-72 relative cursor-pointer overflow-hidden"
             onClick={() => setShuffleOrder((o) => [...o.slice(1), o[0]])}
           >
-            <p className="eyebrow mb-4">Real Reviews</p>
+            <p className="eyebrow mb-4">What To Expect</p>
             {shuffleOrder.map((idx, pos) => (
               <div
                 key={idx}
                 className="absolute inset-8 rounded-2xl bg-primary p-5 flex flex-col justify-between transition-all duration-500"
                 style={{
                   transform: `translateY(${pos * 10}px) scale(${1 - pos * 0.05})`,
-                  zIndex: 10 - pos,
-                  opacity: pos === 2 ? 0 : 1,
+                  zIndex: VALUE_PROPS.length - pos,
+                  opacity: pos === VALUE_PROPS.length - 1 ? 0 : 1,
                 }}
               >
-                <p className="font-flourish italic text-lg">
-                  {['"So much calmer than a salon."', '"Alissa is fantastic with anxious pups."', '"Never going back to drop-off grooming."'][idx]}
-                </p>
-                <p className="text-xs text-white/60 font-mono">— Seattle pet parent</p>
+                <p className="font-flourish italic text-lg">{VALUE_PROPS[idx].text}</p>
+                <p className="text-xs text-white/60 font-mono">{VALUE_PROPS[idx].source}</p>
               </div>
             ))}
           </div>
